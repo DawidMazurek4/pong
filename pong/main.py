@@ -16,6 +16,11 @@ tło_image = pygame.transform.scale(tło_image, (screen_width, screen_height))
 ball_image = load_image('ball.png')
 ball_image = pygame.transform.scale(ball_image, (40, 40))
 ball_image.set_colorkey((255, 255, 255))
+odbice_sound = pygame.mixer.Sound('odbicie.wav')
+pygame.mixer.Sound.set_volume(odbice_sound,0.1)
+music = pygame.mixer.music.load('music.wav')
+pygame.mixer.music.set_volume(0.03)
+pygame.mixer.music.play(-1)
 display.set_icon(ball_image)
 ball = ball_image.get_rect()
 score = -1
@@ -34,6 +39,7 @@ def game():
     x_speed, y_speed = 5, 5
 
     while game_run:
+
         score_text = pygame.font.SysFont(None, 100).render(f'{score}', True, (0,0,0))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -46,10 +52,13 @@ def game():
             game_run = False
             score = 0
         if ball.top <= 0 :
+            pygame.mixer.Sound.play(odbice_sound)
             y_speed *= -1
         if ball.left <= 0 or ball.right >= screen_width:
+            pygame.mixer.Sound.play(odbice_sound)
             x_speed *= - 1
         if ball.colliderect(player):
+            pygame.mixer.Sound.play(odbice_sound)
             score += 1
 
             y_speed *= -1
@@ -81,8 +90,10 @@ while True:
     ball.x += x_speed
     ball.y += y_speed
     if ball.top <= 0 or ball.bottom >= screen_height:
+        pygame.mixer.Sound.play(odbice_sound)
         y_speed *= -1
     if ball.left <= 0 or ball.right >= screen_width:
+        pygame.mixer.Sound.play(odbice_sound)
         x_speed *= - 1
     screen.blit(tło_image,(0,0))
     screen.blit(preskey_text,(200,200))
