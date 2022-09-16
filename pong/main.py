@@ -15,12 +15,13 @@ tło_image = load_image('tło.png')
 tło_image = pygame.transform.scale(tło_image, (screen_width, screen_height))
 ball_image = load_image('ball.png')
 ball_image = pygame.transform.scale(ball_image, (40, 40))
+ball_image.set_colorkey((255, 255, 255))
 display.set_icon(ball_image)
 ball = ball_image.get_rect()
 score = -1
 score_text = pygame.font.SysFont(None, 25).render(f'score:{score}',True,(255,255,255))
 preskey_text = pygame.font.SysFont(None, 40).render(f'Press any key',True,(0,0,0))
-ball_image.set_colorkey((255, 255, 255))
+
 clock = pygame.time.Clock()
 x_speed,y_speed = 5,5
 score = 0
